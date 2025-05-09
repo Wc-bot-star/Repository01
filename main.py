@@ -1,53 +1,16 @@
-import re
+def es_primo(n):
+    # Si el número es menor o igual a 1, no es primo
+    if n <= 1:
+        return False
+    # Verificamos divisores posibles desde 2 hasta la raíz cuadrada de n
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False  # Si se encuentra un divisor, no es primo
+    return True  # Si no se encontró divisor, es primo
 
-def clasificar_entrada(entrada: str) -> str:
-    if entrada.strip() == "":
-        return "vacía o solo espacios"
-    elif re.fullmatch(r"-?\d+\.\d+", entrada):
-        return "número decimal"
-    elif re.fullmatch(r"-?\d+", entrada):
-        return "entero válido"
-    elif re.search(r"[a-zA-Z]", entrada):
-        return "texto alfabético"
-    elif re.search(r"[^\w\s\-\.]", entrada):
-        return "caracteres especiales"
-    else:
-        return "entrada no reconocida"
-
-def iniciar_programa():
-    print("\n📌 Bienvenido al validador interactivo de enteros")
-    print("🔢 Ingrese enteros cuando quiera. Escriba 'salir' para terminar o 'resumen' para ver lo que ha ingresado.\n")
-
-    valores_validos = []
-    historial_completo = []
-
-    while True:
-        entrada = input("📝 Ingresa un dato: ").strip()
-        historial_completo.append(entrada)
-
-        # Comandos especiales
-        if entrada.lower() == "salir":
-            print("👋 Programa finalizado por el usuario.")
-            break
-        elif entrada.lower() == "resumen":
-            print("\n📋 RESUMEN DE LA SESIÓN")
-            print("✔️ Enteros válidos ingresados:", valores_validos if valores_validos else "Ninguno aún")
-            print("📦 Total de entradas:", len(historial_completo))
-            print("🧾 Entradas completas:", historial_completo)
-            print("-" * 40)
-            continue
-
-        tipo = clasificar_entrada(entrada)
-
-        if tipo == "entero válido":
-            numero = int(entrada)
-            valores_validos.append(numero)
-            print(f"✅ ¡Correcto! Has ingresado el entero: {numero}\n")
-        else:
-            print(f"🚫 Entrada rechazada: '{entrada}' es {tipo}. Por favor, ingresa un número entero.\n")
-
-    print("\n🎉 ¡Gracias por usar el validador interactivo!")
-
-# Ejecutar el programa
-if __name__ == "__main__":
-    iniciar_programa()
+# Prueba del código
+numero = int(input("Ingresa un número para verificar si es primo: "))
+if es_primo(numero):
+    print(f"{numero} es un número primo.")
+else:
+    print(f"{numero} no es un número primo.")
